@@ -6,19 +6,23 @@ import QRCode from 'qrcode.react';
 import LeadersTable from "./components/LeadersTable";
 
 function App() {
+	const [id, setId] = useState<string>('');
 	const [size, setSize] = useState(310);
+	const [scans, setScans] = useState<string[]>([]);
 
 	useEffect(() => {
 		FingerprintJS.load()
 			.then(fp => fp.get())
 			.then(result => {
 				createUser(result.visitorId);
+				setId(result.visitorId);
 			})
+		getScansValue()
 	}, [])
 
 	useEffect(() => {
 		const handleResize = () => {
-			setSize(window.innerWidth >= 1024 ? 500 : 310);
+			setSize(window.innerWidth >= 1024 ? 430 : 240);
 		};
 		window.addEventListener('resize', handleResize);
 		handleResize();
@@ -27,9 +31,21 @@ function App() {
 		};
 	}, []);
 
+
 	const createUser = async (id: string) => {
-		const response = await axios.post('http://localhost:5000/users', { id: id })
-		console.log(response)
+		await axios.post('http://localhost:5000/users', { id: id })
+	}
+
+	const addScan = async (id: string) => {
+		const res = await axios.put(`http://localhost:5000/users/${id}`, { date: new Date() })
+		if (res.data.message) {
+			alert(res.data.message);
+		}
+	}
+
+	const getScansValue = async () => {
+		const res = await axios.get(`http://localhost:5000/users/scans`)
+		setScans(res.data.toString().split(""))
 	}
 
 	return (
@@ -42,15 +58,21 @@ function App() {
 					<div className="flex gap-20 flex-col w-full items-center mt-10 lg:flex-row lg:items-center lg:justify-between">
 						<div className="flex flex-col justify-center items-center gap-2">
 							<h3 className="text-[31px] text-center max-w-[225px]">Scan this code to get a point</h3>
-							<div className="h-[310px] lg:h-[500px] w-[310px] lg:w-[500px] bg-black rounded-xl">
-								<QRCode size={Math.min(size, window.innerWidth, window.innerHeight)} value="/" />
+							<div className="h-[310px] lg:h-[500px] w-[310px] lg:w-[500px] bg-white rounded-xl flex justify-center items-center border-[4px] border-black">
+								<QRCode
+									size={Math.min(size, window.innerWidth, window.innerHeight)}
+									value={`http://localhost:5000/users/${id}`}
+									bgColor="#fff"
+									fgColor="#FF7D06"
+								/>
 							</div>
+							<p className="text-[18px]">id: {id}</p>
 						</div>
 
 						<div className="flex flex-col gap-5">
-							<div className="gap-3 flex justify-between">
-								{[1, 2, 3].map((item, index) => (
-									<div key={`${index}-${item}`} className="text-[72px] h-[90px] w-[90px] bg-[#A55205] flex justify-center items-center rounded-xl">
+							<div className="gap-3 flex justify-center">
+								{scans.map((item, index) => (
+									<div key={`${index}-${item}`} className="text-[72px] xl:text-[110px] h-[90px] xl:h-[140px] w-[90px] xl:w-[140px] bg-[#A55205] flex justify-center items-center rounded-xl">
 										<p>{item}</p>
 									</div>
 								))}
