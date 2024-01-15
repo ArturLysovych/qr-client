@@ -14,3 +14,9 @@ export const getScansValue = async (): Promise<string[]> => {
 	const res = await axios.get(`http://localhost:5000/users/scans`)
 	return res.data.toString().split("")
 }
+
+export const fetchData = async () => {
+	const response = await axios.get('http://localhost:5000/users');
+	const sortedData = response.data.sort((a: IUser, b: IUser) => b.timesScanned - a.timesScanned);
+	return sortedData;
+}

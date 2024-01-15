@@ -1,20 +1,15 @@
-import axios from "axios"
 import { useEffect, useState } from "react"
+
 import { useMyContext } from "../providers/ContextProvider"
+import { fetchData } from "../utils"
 
 const LeadersTable = () => {
 	const [data, setData] = useState<IUser[]>([])
 	const { id } = useMyContext()
 
 	useEffect(() => {
-		fetchData()
+		fetchData().then(data => setData(data))
 	}, [])
-
-	const fetchData = async () => {
-		const response = await axios.get('http://localhost:5000/users');
-		const sortedData = response.data.sort((a: IUser, b: IUser) => b.timesScanned - a.timesScanned);
-		setData(sortedData);
-	}
 
 	return (
 		<div className='rounded-xl bg-orange-500 w-full py-5 px-3 flex gap-4 flex-col items-center'>
