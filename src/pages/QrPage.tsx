@@ -12,7 +12,7 @@ function QrPage() {
 	const { message, setMessage, id, setId } = useMyContext();
 
 	useEffect(() => {
-		let timeoutId: NodeJS.Timeout;
+		let timeoutId: any;
 
 		if (message !== null) {
 			timeoutId = setTimeout(() => {
