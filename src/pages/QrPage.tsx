@@ -54,7 +54,7 @@ function QrPage() {
 							<div className="h-[310px] lg:h-[500px] w-[310px] lg:w-[500px] bg-white rounded-xl flex justify-center items-center border-[4px] border-black">
 								<QRCode
 									size={Math.min(size, window.innerWidth, window.innerHeight)}
-									value={`${window.location.origin}/users/${id}`}
+									value={`${window.location.origin}/user/${id}`}
 									bgColor="#fff"
 									fgColor="#FF7D06"
 								/>
