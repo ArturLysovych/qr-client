@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { useNavigate, useParams } from "react-router-dom";
 import { addCredentials, addScan, getUser } from "../utils";
 import { useMyContext } from "../providers/ContextProvider";
