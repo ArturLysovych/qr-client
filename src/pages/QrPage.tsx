@@ -59,7 +59,7 @@ function QrPage() {
 									fgColor="#FF7D06"
 								/>
 							</div>
-							<p className="text-[18px]">id: {id}</p>
+							<p className="text-[15px] sm:text-[18px]">id: {id}</p>
 						</div>
 
 						<div className="flex flex-col gap-5">
