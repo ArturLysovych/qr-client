@@ -17,7 +17,7 @@ function QrPage() {
 		if (message !== null) {
 			timeoutId = setTimeout(() => {
 				alert(message);
-				setMessage(null);
+				setMessage(null)
 			}, 200);
 		}
 

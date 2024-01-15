@@ -5,8 +5,8 @@ import { useMyContext } from "../providers/ContextProvider";
 
 const RedirectPage = () => {
 	const { id } = useParams<{ id: string }>();
-
 	const navigate = useNavigate();
+
 	const { message, setMessage } = useMyContext();
 
 	useEffect(() => {
@@ -27,13 +27,14 @@ const RedirectPage = () => {
 						if (!isCancelled) {
 							if (status) {
 								const scanData = await addScan(id);
-								console.log(scanData);
 								if (!isCancelled && scanData.res) {
 									setMessage(scanData.res);
 								}
 								navigate("/");
 							} else {
-								setMessage("You have to enter your name and surname to get a point");
+								if (data && (!data?.name && !data?.surname)) {
+									setMessage("You have to enter your name and surname to get a point");
+								}
 								navigate("/");
 							}
 						}
@@ -54,16 +55,23 @@ const RedirectPage = () => {
 	const getCredentials = async (id: string) => {
 		const name = prompt("Enter your name")
 		const surname = prompt("Enter your surname")
-		if (!name || !surname) return false;
+		if (!name || !surname) {
+			setMessage("You have to enter your name and surname to get a point");
+			return false;
+		}
 		const credentials = { name, surname }
-		await addCredentials(id, credentials);
+		const userData = await addCredentials(id, credentials);
+		handleScan(id)
+		return userData
+	}
+
+	const handleScan = async (id: string) => {
 		await addScan(id)
 			.then((data) => {
+				console.log(data.res)
 				if (data.res) {
-					if (message === null || message !== data.res) {
+					if (message === null) {
 						setMessage(data.res);
-					} else {
-						setMessage(null);
 					}
 				}
 			})
