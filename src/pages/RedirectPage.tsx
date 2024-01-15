@@ -1,17 +1,33 @@
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom";
 import { addScan } from "../utils";
+import { useMyContext } from "../providers/ContextProvider";
 
 const RedirectPage = () => {
 	const { id } = useParams<{ id: string }>();
+	const [isMessageSet, setIsMessageSet] = useState<boolean>(false);
+
 	const navigate = useNavigate();
+	const { message, setMessage } = useMyContext();
 
 	useEffect(() => {
 		if (id) {
-			addScan(id);
+			addScan(id)
+				.then((data) => {
+					if (data.res) {
+						if (!isMessageSet && message === null && message !== data.res) {
+							setIsMessageSet(true);
+							setMessage(data.res);
+						} else {
+							setMessage(null);
+						}
+					}
+					navigate("/");
+				})
+		} else {
+			navigate("/");
 		}
-		navigate("/");
-	}, []);
+	}, [id]);
 
 	return (
 		<div className="bg-[#FF7D06]">

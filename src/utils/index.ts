@@ -7,9 +7,6 @@ export const createUser = async (id: string): Promise<any> => {
 
 export const addScan = async (id: string): Promise<any> => {
 	const res = await axios.put(`http://localhost:5000/users/${id}`, { date: new Date() })
-	if (res.data.message) {
-		alert(res.data.message);
-	}
 	return res.data;
 }
 

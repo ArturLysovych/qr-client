@@ -4,11 +4,21 @@ import QRCode from 'qrcode.react';
 
 import LeadersTable from "../components/LeadersTable";
 import { createUser, getScansValue } from "../utils";
+import { useMyContext } from "../providers/ContextProvider";
 
 function QrPage() {
-	const [id, setId] = useState<string>('');
 	const [size, setSize] = useState<number>(310);
 	const [scans, setScans] = useState<string[]>([]);
+	const { message, setMessage, id, setId } = useMyContext();
+
+	useEffect(() => {
+		if (message !== null) {
+			setTimeout(() => {
+				alert(message);
+				setMessage(null);
+			}, 200)
+		}
+	}, [message]);
 
 	useEffect(() => {
 		FingerprintJS.load()
