@@ -2,9 +2,9 @@ import { useEffect, useState } from "react"
 import FingerprintJS from "@fingerprintjs/fingerprintjs"
 import QRCode from 'qrcode.react';
 
-import LeadersTable from "../components/LeadersTable";
 import { createUser, getScansValue } from "../utils";
 import { useMyContext } from "../providers/ContextProvider";
+import LinkButton from "../components/LinkButton";
 
 function QrPage() {
 	const [size, setSize] = useState<number>(310);
@@ -12,12 +12,20 @@ function QrPage() {
 	const { message, setMessage, id, setId } = useMyContext();
 
 	useEffect(() => {
+		let timeoutId: NodeJS.Timeout;
+
 		if (message !== null) {
-			setTimeout(() => {
+			timeoutId = setTimeout(() => {
 				alert(message);
 				setMessage(null);
-			}, 200)
+			}, 200);
 		}
+
+		return () => {
+			if (timeoutId) {
+				clearTimeout(timeoutId);
+			}
+		};
 	}, [message]);
 
 	useEffect(() => {
@@ -75,7 +83,7 @@ function QrPage() {
 					</div>
 
 					<div className="w-full flex justify-center">
-						<LeadersTable />
+						<LinkButton to="/users">See users</LinkButton>
 					</div>
 				</div>
 			</div>
