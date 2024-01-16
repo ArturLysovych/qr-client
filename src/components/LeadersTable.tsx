@@ -12,15 +12,14 @@ const LeadersTable = ({ isExtended = true }: { isExtended?: boolean }) => {
 	}, [message, id])
 
 	return (
-		<div className='rounded-xl bg-orange-500 w-full py-5 px-3 flex gap-4 flex-col items-center border-[3px] border-black'>
-			<h2 className="text-[34px]">Top Users</h2>
+		<div className='rounded-xl bg-white w-full py-5 px-3 flex gap-4 flex-col items-center border-[8px] border-white'>
+			<h2 className="text-[34px] text-red-500 underline underline-offset-8 font-bold">Top Users</h2>
 			{data.length > 0 ?
-
 				<table className="w-full">
 					<tbody className="flex flex-col gap-2">
 						{data.map((item, index) => (
 							item.timesScanned > 0 && (
-								<tr key={item.id} className={`w-full ${id === item.id ? "bg-orange-800" : "bg-orange-300"} flex justify-between text-[8px] sm:text-[10px] md:text-lg lg:text-2xl py-3 px-4 rounded-xl`}>
+								<tr key={item.id} className={`w-full ${id === item.id ? "bg-red-400" : "bg-red-200"} flex justify-between text-[8px] sm:text-[10px] md:text-lg lg:text-2xl py-3 px-4 rounded-xl`}>
 									<td>{index + 1}</td>
 									{
 										item.name && item.surname && (
@@ -39,7 +38,7 @@ const LeadersTable = ({ isExtended = true }: { isExtended?: boolean }) => {
 						))}
 					</tbody>
 				</table>
-				: <h2 className="text-[20px]">You have the chance to be the first</h2>
+				: <h2 className="text-[20px] text-red-500">You have the chance to be the first</h2>
 			}
 		</div>
 	)

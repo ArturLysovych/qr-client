@@ -20,8 +20,8 @@ const UsersPage = () => {
 	}, [id])
 
 	return (
-		<div className="bg-[#FF7D06]">
-			<div className="container mx-auto px-4">
+		<div className="bg-red-500">
+			<div className="container mx-auto px-4 max-w-screen-lg">
 				<div className="min-h-screen flex gap-9 flex-col justify-start items-center py-16 text-white">
 					<LinkButton to="/">Back To QR</LinkButton>
 					<LeadersTable />
