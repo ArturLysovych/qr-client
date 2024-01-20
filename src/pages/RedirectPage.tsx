@@ -75,11 +75,15 @@ const RedirectPage = () => {
 	const handleScan = async (id: string) => {
 		await addScan(id)
 			.then((data) => {
-				console.log(data.res)
 				if (data.res) {
 					if (message === null) {
 						setMessage(data.res);
 					}
+				}
+			}).catch(err => {
+				if (err) {
+					setMessage("You have already scanned today");
+					navigate("/");
 				}
 			})
 	}
