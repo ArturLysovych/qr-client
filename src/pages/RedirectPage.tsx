@@ -20,16 +20,12 @@ const RedirectPage = () => {
 					Cookies.set('qr_unique_user_id', id, { expires: 1200 });
 					if (!isCancelled) {
 						if (data && data.name && data.surname) {
-							const scanData = await addScan(id);
-							if (!isCancelled && scanData.res) {
-								setMessage(scanData.res);
-								navigate("/");
-							}
+							await handleScan(id);
 						} else {
 							const status = await getCredentials(id);
 							if (!isCancelled) {
 								if (status) {
-									const scanData = await addScan(id);
+									const scanData = await handleScan(id);
 									if (!isCancelled && scanData.res) {
 										setMessage(scanData.res);
 									}
@@ -43,8 +39,9 @@ const RedirectPage = () => {
 							}
 						}
 					}
-				} catch (error) {
-					setMessage("invalid qr code");
+				} catch (error: any) {
+					console.log(error);
+					setMessage(error.message);
 					navigate("/");
 				}
 			} else {
@@ -57,7 +54,7 @@ const RedirectPage = () => {
 		return () => {
 			isCancelled = true;
 		};
-	}, [id]);
+	}, []);
 
 	const getCredentials = async (id: string) => {
 		const name = prompt("Enter your name");
@@ -72,13 +69,15 @@ const RedirectPage = () => {
 		return userData;
 	}
 
-	const handleScan = async (id: string) => {
-		await addScan(id)
+	const handleScan = async (id: string): Promise<any> => {
+		return await addScan(id)
 			.then((data) => {
-				if (data.res) {
+				if (data?.res) {
 					if (message === null) {
 						setMessage(data.res);
+						navigate("/");
 					}
+					navigate("/");
 				}
 			}).catch(err => {
 				if (err) {
@@ -86,6 +85,7 @@ const RedirectPage = () => {
 					navigate("/");
 				}
 			})
+
 	}
 
 	return (
