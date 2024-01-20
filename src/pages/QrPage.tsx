@@ -19,6 +19,10 @@ function QrPage() {
 	// )
 
 	useEffect(() => {
+		getScansValue().then(scans => setScans(scans));
+	}, [id, message])
+
+	useEffect(() => {
 		let timeoutId: any;
 
 		if (message !== null) {
@@ -49,12 +53,11 @@ function QrPage() {
 					setId(existingCookie);
 				}
 			})
-		getScansValue().then(data => setScans(data));
 	}, [])
 
 	useEffect(() => {
 		const handleResize = () => {
-			setSize(window.innerWidth >= 1024 ? 430 : 240);
+			setSize(window.innerWidth >= 1024 ? 350 : 240);
 		};
 		window.addEventListener('resize', handleResize);
 		handleResize();
@@ -85,13 +88,12 @@ function QrPage() {
 					<div className="flex gap-10 flex-col w-full items-center mt-[40px] lg:flex-row lg:items-center lg:justify-between">
 						<div className="flex flex-col justify-center items-center gap-2">
 							<h3 className="text-[30px] text-center max-w-[225px]">Scan this code to get a point</h3>
-							<div className="h-[310px] w-[310px] lg:h-[350px] lg:w-[350px] bg-white rounded-xl flex justify-center items-center border-[4px] border-gray-300">
+							<div className="h-[310px] w-[310px] lg:h-[420px] lg:w-[420px] bg-white rounded-xl flex justify-center items-center border-[4px] border-gray-300">
 								<QRCode
 									size={Math.min(size, window.innerWidth, window.innerHeight)}
 									value={`${window.location.origin}/user/${id}`}
 									bgColor="#fff"
 									fgColor="#ef4444"
-									className="origin-center lg:scale-[.65]"
 								/>
 							</div>
 							<p className="text-[15px] sm:text-[18px]">id: {id}</p>
