@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import FingerprintJS from "@fingerprintjs/fingerprintjs"
+import Cookies from 'js-cookie';
 
 import LeadersTable from '../components/LeadersTable'
 import LinkButton from '../components/LinkButton'
@@ -14,7 +15,12 @@ const UsersPage = () => {
 			FingerprintJS.load()
 				.then(fp => fp.get())
 				.then(result => {
-					setId(result.visitorId);
+					const existingCookie = Cookies.get('qr_unique_user_id');
+					if (!existingCookie) {
+						setId(result.visitorId);
+					} else {
+						setId(existingCookie);
+					}
 				})
 		}
 	}, [id])

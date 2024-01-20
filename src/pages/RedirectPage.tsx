@@ -2,6 +2,7 @@ import { useEffect } from "react"
 import { useNavigate, useParams } from "react-router-dom";
 import { addCredentials, addScan, getUser } from "../utils";
 import { useMyContext } from "../providers/ContextProvider";
+import Cookies from 'js-cookie';
 
 const RedirectPage = () => {
 	const { id } = useParams<{ id: string }>();
@@ -14,7 +15,14 @@ const RedirectPage = () => {
 
 		const fetchData = async () => {
 			if (id) {
-				const data = await getUser(id);
+				const data = await getUser(id).catch((error) => {
+					if (error) {
+						setMessage("invalid qr code")
+						navigate("/");
+						return;
+					}
+				});
+				Cookies.set('qr_unique_user_id', id, { expires: 1200 });
 				if (!isCancelled) {
 					if (data && data.name && data.surname) {
 						const scanData = await addScan(id);

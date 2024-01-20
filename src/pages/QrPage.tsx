@@ -1,15 +1,22 @@
 import { useEffect, useState } from "react"
 import FingerprintJS from "@fingerprintjs/fingerprintjs"
 import QRCode from 'qrcode.react';
+import Cookies from 'js-cookie';
 
 import { createUser, getScansValue } from "../utils";
 import { useMyContext } from "../providers/ContextProvider";
 import LinkButton from "../components/LinkButton";
+// import { useVisitorData } from "@fingerprintjs/fingerprintjs-pro-react";
 
 function QrPage() {
 	const [size, setSize] = useState<number>(310);
 	const [scans, setScans] = useState<string[]>([]);
 	const { message, setMessage, id, setId } = useMyContext();
+
+	// const { isLoading, error, data, getData } = useVisitorData(
+	// 	{ extendedResult: true },
+	// 	{ immediate: true }
+	// )
 
 	useEffect(() => {
 		let timeoutId: any;
@@ -32,8 +39,15 @@ function QrPage() {
 		FingerprintJS.load()
 			.then(fp => fp.get())
 			.then(result => {
-				createUser(result.visitorId);
-				setId(result.visitorId);
+				const existingCookie = Cookies.get('qr_unique_user_id');
+				if (!existingCookie) {
+					Cookies.set('qr_unique_user_id', result.visitorId, { expires: 1200 });
+					createUser(result.visitorId);
+					setId(result.visitorId);
+				} else {
+					createUser(existingCookie);
+					setId(existingCookie);
+				}
 			})
 		getScansValue().then(data => setScans(data));
 	}, [])
@@ -51,6 +65,14 @@ function QrPage() {
 
 	return (
 		<div className="bg-red-500 relative">
+
+			{/* <div>
+				<button onClick={() => getData({ ignoreCache: true })}>
+					Reload data
+				</button>
+				<p>VisitorId: {isLoading ? 'Loading...' : data?.visitorId}</p>
+			</div> */}
+
 			<div className="container mx-auto px-[20px] max-w-screen-lg">
 				<div className="min-h-screen flex flex-col items-center py-16 gap-10 text-white font-bold">
 
