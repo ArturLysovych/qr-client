@@ -15,38 +15,37 @@ const RedirectPage = () => {
 
 		const fetchData = async () => {
 			if (id) {
-				const data = await getUser(id).catch((error) => {
-					if (error) {
-						setMessage("invalid qr code")
-						navigate("/");
-						return;
-					}
-				});
-				Cookies.set('qr_unique_user_id', id, { expires: 1200 });
-				if (!isCancelled) {
-					if (data && data.name && data.surname) {
-						const scanData = await addScan(id);
-						if (!isCancelled && scanData.res) {
-							setMessage(scanData.res);
-							navigate("/");
-						}
-					} else {
-						const status = await getCredentials(id);
-						if (!isCancelled) {
-							if (status) {
-								const scanData = await addScan(id);
-								if (!isCancelled && scanData.res) {
-									setMessage(scanData.res);
-								}
+				try {
+					const data = await getUser(id);
+					Cookies.set('qr_unique_user_id', id, { expires: 1200 });
+					if (!isCancelled) {
+						if (data && data.name && data.surname) {
+							const scanData = await addScan(id);
+							if (!isCancelled && scanData.res) {
+								setMessage(scanData.res);
 								navigate("/");
-							} else {
-								if (data && (!data?.name && !data?.surname)) {
-									setMessage("You have to enter your name and surname to get a point");
+							}
+						} else {
+							const status = await getCredentials(id);
+							if (!isCancelled) {
+								if (status) {
+									const scanData = await addScan(id);
+									if (!isCancelled && scanData.res) {
+										setMessage(scanData.res);
+									}
+									navigate("/");
+								} else {
+									if (data && (!data?.name && !data?.surname)) {
+										setMessage("You have to enter your name and surname to get a point");
+									}
+									navigate("/");
 								}
-								navigate("/");
 							}
 						}
 					}
+				} catch (error) {
+					setMessage("invalid qr code");
+					navigate("/");
 				}
 			} else {
 				navigate("/");
