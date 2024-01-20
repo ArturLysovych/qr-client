@@ -108,7 +108,7 @@ function QrPage() {
 										</div>
 									))}
 								</div>
-								<h4 className="text-[32px] text-center">Your ScPoints</h4>
+								<h4 className="text-[32px] text-center">Total ScPoints</h4>
 							</div>
 							<div className="flex justify-center mx-auto items-center w-[310px] sm:w-[340px]">
 								<LinkButton to="/users">See users</LinkButton>
