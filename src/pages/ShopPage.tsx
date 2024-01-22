@@ -1,48 +1,20 @@
-import notebook from '../assets/images/notebook.svg';
-
-const goodsArr = [
-    {
-        img: notebook,
-        title: 'notebook',
-        price: 10
-    },
-    {
-        img: notebook,
-        title: 'notebook',
-        price: 10
-    },
-    {
-        img: notebook,
-        title: 'notebook',
-        price: 10
-    },
-    {
-        img: notebook,
-        title: 'notebook',
-        price: 10
-    }
-];
-
-interface IGood {
-    img: string,
-    title: string,
-    price: number,
-}
+import { IGood } from '../interfaces';
+import { goodsArr } from '../constants';
 
 const ShopPage:React.FC = ():JSX.Element => (
-    <div className="w-full h-screen flex justify-center items-center bg-red-500">
-        <div className="max-w-screen-lg w-full h-full flex flex-col justify-around items-center px-[20px]">
-            <h2 className="text-[50px] font-bold text-center leading-[110%] w-full bg-white text-red-500 absolute mt-16 top-0 py-[20px]">Shop</h2>
+    <div className="w-full max-h-[800px] h-screen flex justify-center items-center bg-red-500">
+        <h2 className="text-[50px] font-bold text-center leading-[110%] w-full bg-white text-red-500 absolute mt-16 top-0 py-[20px]">Shop</h2>
+        <div className="max-w-screen-lg w-full h-full flex flex-col justify-around items-center px-[10px] relative">
           
-            <a href='/' className="text-[14px] font-bold text-center leading-[110%] bg-white text-red-500 absolute p-2 rounded-xl m-4 top-0 left-0 cursor-pointer"> Back to QR-page</a>
+            <a href='/' className="outline-none text-[14px] font-bold text-center leading-[110%] bg-white text-red-500 absolute p-2 rounded-xl m-4 top-0 left-0 cursor-pointer"> Back to QR-page</a>
           
             <div className="text-[50px] text-transparent select-none">
                 empty
             </div>
 
-            <div className="flex flex-wrap justify-center items-center gap-[20px]">
-                {goodsArr.map(item => (
-                    <GoodItem good={item} />
+            <div className="flex flex-wrap justify-center items-center gap-[10px] md:gap-[30px]">
+                {goodsArr.map((item, index) => (
+                    <GoodItem key={index} good={item} />
                 ))}
             </div>
         </div>

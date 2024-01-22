@@ -7,3 +7,18 @@ interface IUser {
 	__v: number;
 	_id: string;
 }
+
+export interface IReq {
+    user: string;
+    id: string;
+    goodInfo: {
+        title: string;
+        price: number;
+    };
+}
+
+export interface IGood {
+    img: string;
+    title: string;
+    price: number;
+}
