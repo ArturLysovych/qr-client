@@ -4,6 +4,7 @@ import QrPage from './pages/QrPage';
 import RedirectPage from './pages/RedirectPage';
 import NotFound from './pages/NotFound';
 import UsersPage from './pages/UsersPage';
+import ShopPage from './pages/ShopPage';
 
 function App() {
 
@@ -13,6 +14,7 @@ function App() {
 				<Route path="/" element={<QrPage />} />
 				<Route path="/user/:id" element={<RedirectPage />} />
 				<Route path="/users" element={<UsersPage />} />
+				<Route path="/shop" element={<ShopPage />} />
 				<Route path="*" element={<NotFound />} />
 			</Routes>
 		</Router>
