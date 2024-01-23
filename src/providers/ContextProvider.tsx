@@ -20,6 +20,7 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
 		</MyContext.Provider>
 	);
 }
+
 export function useMyContext() {
 	const context = useContext(MyContext);
 	if (!context) {

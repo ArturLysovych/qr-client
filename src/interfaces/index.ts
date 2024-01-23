@@ -1,4 +1,4 @@
-interface IUser {
+export interface IUser {
 	id: string;
 	lastScanned: string | null;
 	name?: string;
@@ -9,16 +9,16 @@ interface IUser {
 }
 
 export interface IReq {
-    user: string;
-    id: string;
-    goodInfo: {
-        title: string;
-        price: number;
-    };
+	user: string;
+	id: string;
+	goodInfo: {
+		title: string;
+		price: number;
+	};
 }
 
 export interface IGood {
-    img: string;
-    title: string;
-    price: number;
+	image: string;
+	name: string;
+	price: number;
 }

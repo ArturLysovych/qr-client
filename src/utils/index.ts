@@ -1,5 +1,7 @@
 import axios from "axios";
 
+import { IUser } from "../interfaces";
+
 const baseUlr = import.meta.env.VITE_APP_SERVER_URL;
 
 export const createUser = async (id: string): Promise<any> => {
@@ -32,3 +34,8 @@ export const fetchData = async () => {
 	const sortedData = response.data.sort((a: IUser, b: IUser) => b.timesScanned - a.timesScanned).filter((user: IUser) => user.timesScanned > 0);
 	return sortedData;
 }
+
+export const getProducts = async () => {
+	const response = await axios.get(`${baseUlr}/products`);
+	return response.data;
+} 

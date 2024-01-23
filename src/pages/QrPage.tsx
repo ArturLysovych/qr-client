@@ -90,7 +90,7 @@ function QrPage() {
 							<h3 className="text-[30px] text-center max-w-[225px]">Scan this code to get a point</h3>
 							<div className="h-[310px] w-[310px] lg:h-[420px] lg:w-[420px] bg-white rounded-xl flex justify-center items-center border-[4px] border-gray-300">
 								<QRCode
-									size={Math.min(size, window.innerWidth, window.innerHeight)}
+									size={size}
 									value={`${window.location.origin}/user/${id}`}
 									bgColor="#fff"
 									fgColor="#ef4444"

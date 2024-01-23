@@ -63,8 +63,8 @@ const RedirectPage = () => {
 	const handleScan = async (id: string): Promise<any> => {
 		try {
 			const data = await addScan(id);
-			if (data?.res && message === null) {
-				setMessage(data.res);
+			if (data?.message && message === null) {
+				setMessage(data.message);
 			}
 			navigate("/");
 			return data;
