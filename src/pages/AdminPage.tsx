@@ -1,34 +1,46 @@
-import { Routes, Route, Link, useLocation } from 'react-router-dom';
-import React, { useEffect, useState } from 'react'
+import { Routes, Route, Link, useLocation, useNavigate } from 'react-router-dom';
+import React, { useEffect, useRef, useState } from 'react'
 
 import { IRequest } from '../interfaces';
 import { allowRequest, denyRequest, getRequests } from '../utils';
+import Loader from '../components/Loader';
+import { useMyContext } from '../providers/ContextProvider';
 
 const AdminPage: React.FC = (): JSX.Element => {
 
 	const location = useLocation();
+	const navigate = useNavigate();
 
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [requests, setRequests] = useState<IRequest[]>([]);
 	const [pendingRequests, setPendingRequests] = useState<IRequest[]>([]);
-	const [dataFetched, setDataFetched] = useState(false);
+	const initialRender = useRef(true)
+
+	const { admin } = useMyContext();
 
 	useEffect(() => {
-		fetchData();
+		if (initialRender.current) {
+			initialRender.current = false;
+			if (!admin.current) {
+				alert("You are not authorized to view this page");
+				navigate('/login')
+			}
+			fetchData();
+		}
 	}, []);
 
 	useEffect(() => {
 		if (isLoading) {
 			fetchData();
 		}
-	}, [isLoading, dataFetched]);
+	}, [isLoading]);
 
 	const fetchData = async () => {
 		setIsLoading(true);
 		await getRequests().then((data) => {
 			setRequests(data.sort((a: IRequest, b: IRequest) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()));
 			setPendingRequests(data.filter((item: IRequest) => item.status === "pending"));
-		}).finally(() => setDataFetched(true))
+		})
 		setIsLoading(false);
 	};
 
@@ -74,17 +86,9 @@ const AdminPage: React.FC = (): JSX.Element => {
 				</Routes>
 			</div>
 
-
-			{/* load screen */}
-
 			{isLoading &&
-				<div className='fixed flex justify-center items-center bg-black-opacity-40 inset-0'>
-					<img src="/src/assets/images/loader.svg" alt="loader" className='h-32 w-32' />
-				</div>
+				<Loader />
 			}
-
-
-			{/* load screen */}
 
 		</div>
 	)

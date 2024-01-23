@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { IUser } from "../interfaces";
+import { ILoginDto, IUser } from "../interfaces";
 
 const baseUlr = import.meta.env.VITE_APP_SERVER_URL;
 
@@ -40,6 +40,11 @@ export const getProducts = async () => {
 	return response.data;
 }
 
+export const createRequest = async (userId: string, requestsId: string) => {
+	const response = await axios.post(`${baseUlr}/requests/${userId}/${requestsId}`);
+	return response.data;
+}
+
 export const getRequests = async () => {
 	const response = await axios.get(`${baseUlr}/requests`);
 	return response.data;
@@ -52,5 +57,10 @@ export const allowRequest = async (id: string) => {
 
 export const denyRequest = async (id: string) => {
 	const response = await axios.post(`${baseUlr}/requests/${id}/deny`);
+	return response.data;
+}
+
+export const login = async (credentials: ILoginDto) => {
+	const response = await axios.post(`${baseUlr}/auth/login`, credentials);
 	return response.data;
 }

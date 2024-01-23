@@ -1,10 +1,11 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useRef } from 'react';
 
 interface IContextType {
 	message: string | null;
 	setMessage: React.Dispatch<React.SetStateAction<string | null>>;
 	id: string | null;
 	setId: React.Dispatch<React.SetStateAction<string | null>>;
+	admin: React.MutableRefObject<boolean>;
 }
 
 const MyContext = createContext<IContextType | null>(null);
@@ -13,9 +14,11 @@ export function ContextProvider({ children }: { children: React.ReactNode }) {
 
 	const [message, setMessage] = useState<null | string>(null);
 	const [id, setId] = useState<string | null>(null);
+	const admin = useRef(false)
+
 
 	return (
-		<MyContext.Provider value={{ message, setMessage, id, setId }}>
+		<MyContext.Provider value={{ message, setMessage, id, setId, admin }}>
 			{children}
 		</MyContext.Provider>
 	);

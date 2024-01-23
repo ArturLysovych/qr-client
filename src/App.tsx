@@ -5,6 +5,7 @@ import RedirectPage from './pages/RedirectPage';
 import UsersPage from './pages/UsersPage';
 import ShopPage from './pages/ShopPage';
 import AdminPage from './pages/AdminPage';
+import LoginPage from './pages/LoginPage';
 
 function App() {
 
@@ -15,6 +16,7 @@ function App() {
 				<Route path="/user/:id" element={<RedirectPage />} />
 				<Route path="/users" element={<UsersPage />} />
 				<Route path="/shop" element={<ShopPage />} />
+				<Route path="/login" element={<LoginPage />} />
 				<Route path="/admin/*" element={<AdminPage />}>
 					<Route path="requests" element={<></>} />
 					<Route path="history" element={<></>} />

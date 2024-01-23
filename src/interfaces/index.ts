@@ -39,3 +39,8 @@ export interface IRequest {
 	updatedAt: string;
 	__v: number;
 }
+
+export interface ILoginDto {
+	username: string;
+	password: string;
+}
