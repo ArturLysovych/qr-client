@@ -1,4 +1,4 @@
-interface ScanHistory {
+export interface IScanHistory {
 	date: string;
 	totalScans: number;
 	_id: string;
@@ -18,7 +18,7 @@ export interface IUser {
 	lastScanned: string;
 	timesScanned: number;
 	requests: IRequest[];
-	scanHistory: ScanHistory[];
+	scanHistory: IScanHistory[];
 	__v: number;
 	name: string;
 	surname: string;

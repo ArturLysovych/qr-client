@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import FingerprintJS from "@fingerprintjs/fingerprintjs"
 import Cookies from 'js-cookie';
 
@@ -14,6 +14,7 @@ const ShopPage: React.FC = (): JSX.Element => {
 
 	const [products, setProducts] = useState<IProduct[]>([]);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
+	const initialRender = useRef<boolean>(true);
 
 	const { id, setId } = useMyContext();
 
@@ -33,7 +34,10 @@ const ShopPage: React.FC = (): JSX.Element => {
 	}, [id])
 
 	useEffect(() => {
-		fetchData();
+		if (initialRender) {
+			initialRender.current = false;
+			fetchData();
+		}
 	}, []);
 
 	useEffect(() => {
@@ -62,10 +66,10 @@ const ShopPage: React.FC = (): JSX.Element => {
 				</div>
 
 				<div className="flex flex-wrap justify-center items-center gap-[10px] md:gap-[30px]">
-					{products ? products.map((item: IProduct, index: number) => (
+					{products && products.length !== 0 ? products.map((item: IProduct, index: number) => (
 						<GoodItem key={index} product={item} userId={id} setIsLoading={setIsLoading} />
 					)) : (
-						<h2>There are no products so far</h2>
+						<h2 className='text-[34px] text-white font-bold'>There are no products so far</h2>
 					)}
 				</div>
 			</div>
