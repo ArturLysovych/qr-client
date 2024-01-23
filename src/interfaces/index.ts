@@ -1,24 +1,32 @@
-export interface IUser {
-	id: string;
-	lastScanned: string | null;
-	name?: string;
-	surname?: string;
-	timesScanned: number;
-	__v: number;
+interface ScanHistory {
+	date: string;
+	totalScans: number;
 	_id: string;
 }
 
-export interface IReq {
-	user: string;
-	id: string;
-	goodInfo: {
-		title: string;
-		price: number;
-	};
-}
-
-export interface IGood {
-	image: string;
+export interface IProduct {
+	_id: string;
 	name: string;
 	price: number;
+	image: string;
+	__v: number;
+}
+
+export interface IUser {
+	_id: string;
+	id: string;
+	lastScanned: string;
+	timesScanned: number;
+	requests: IRequest[];
+	scanHistory: ScanHistory[];
+	__v: number;
+	name: string;
+	surname: string;
+}
+
+export interface IRequest {
+	_id: string;
+	userId: IUser;
+	productId: IProduct;
+	__v: number;
 }

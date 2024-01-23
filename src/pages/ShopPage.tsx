@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 
-import { IGood } from '../interfaces';
+import { IProduct } from '../interfaces';
 import { getProducts } from '../utils';
 
 const baseUlr = import.meta.env.VITE_APP_SERVER_URL;
 
 const ShopPage: React.FC = (): JSX.Element => {
 
-	const [goods, setGoods] = useState<IGood[]>([]);
+	const [goods, setGoods] = useState<IProduct[]>([]);
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -29,7 +29,7 @@ const ShopPage: React.FC = (): JSX.Element => {
 				</div>
 
 				<div className="flex flex-wrap justify-center items-center gap-[10px] md:gap-[30px]">
-					{goods && goods.map((item: IGood, index: number) => (
+					{goods && goods.map((item: IProduct, index: number) => (
 						<GoodItem key={index} good={item} />
 					))}
 				</div>
@@ -38,11 +38,7 @@ const ShopPage: React.FC = (): JSX.Element => {
 	)
 }
 
-const GoodItem = ({ good }: { good: IGood }) => {
-
-
-	console.log(good);
-
+const GoodItem = ({ good }: { good: IProduct }) => {
 
 	return (
 		<div className="h-[240px] w-[150px] bg-white flex flex-col justify-around items-center rounded-xl border-red-400 transition-all duration-300 border-[1px] cursor-pointer hover:border-[5px]">

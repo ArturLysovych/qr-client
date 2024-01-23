@@ -38,4 +38,9 @@ export const fetchData = async () => {
 export const getProducts = async () => {
 	const response = await axios.get(`${baseUlr}/products`);
 	return response.data;
-} 
+}
+
+export const getRequests = async () => {
+	const response = await axios.get(`${baseUlr}/requests`);
+	return response.data;
+}
