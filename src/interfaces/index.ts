@@ -24,9 +24,18 @@ export interface IUser {
 	surname: string;
 }
 
+export enum RequestStatus {
+	ALLOWED = "allowed",
+	DENIED = "denied",
+	PENDING = "pending",
+}
+
 export interface IRequest {
 	_id: string;
 	userId: IUser;
 	productId: IProduct;
+	status: RequestStatus;
+	createdAt: string;
+	updatedAt: string;
 	__v: number;
 }

@@ -44,3 +44,13 @@ export const getRequests = async () => {
 	const response = await axios.get(`${baseUlr}/requests`);
 	return response.data;
 }
+
+export const allowRequest = async (id: string) => {
+	const response = await axios.post(`${baseUlr}/requests/${id}/allow`);
+	return response.data;
+}
+
+export const denyRequest = async (id: string) => {
+	const response = await axios.post(`${baseUlr}/requests/${id}/deny`);
+	return response.data;
+}
