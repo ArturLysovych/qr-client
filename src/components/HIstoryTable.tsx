@@ -42,7 +42,7 @@ const HistoryTable = () => {
 							<tr key={item._id} className={`w-full bg-red-400 flex justify-between text-[8px] sm:text-[10px] md:text-lg lg:text-2xl py-3 px-4 rounded-xl`}>
 								<td>{index + 1}</td>
 								<td>total scans: {item.totalScans}</td>
-								<td>date: {item.date.slice(0, 10).split("-").reverse().join("/")} {item.date.slice(12, 16)}</td>
+								<td>date: {item.date.slice(0, 10).split("-").reverse().join("/")}</td>
 							</tr>
 						))}
 					</tbody>

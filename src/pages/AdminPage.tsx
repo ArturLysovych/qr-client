@@ -123,7 +123,7 @@ const RequestItem = ({ req, changeable = false, setIsLoading }: { req: IRequest,
 					changeable && <h2 className={`font-bold text-xl ${req.status === "pending" ? "text-yellow-400" : req.status === "allowed" ? "text-green-500" : "text-red-500"}`}>{req.status}</h2>
 				}
 				{
-					changeable && <h2 className={`font-bold text-base`}>{req.updatedAt.slice(0, 10).split("-").reverse().join("/")} {req.updatedAt.slice(12, 16)}</h2>
+					changeable && <h2 className={`font-bold text-base`}>{req.updatedAt.slice(0, 10).split("-").reverse().join("/")}</h2>
 				}
 			</div>
 			<div className={`${changeable && "hidden"} w-full flex justify-end gap-[10px]`}>
