@@ -5,6 +5,7 @@ import Cookies from 'js-cookie';
 import scansHistory from '../assets/images/scans-history.png'
 import shopIcon from '../assets/images/shop.png'
 import { useNavigate } from "react-router-dom";
+import Popup from "../components/Popup";
 
 import { createUser, getScansValue } from "../utils";
 import { useMyContext } from "../providers/ContextProvider";
@@ -73,7 +74,10 @@ function QrPage() {
 
 	return (
 		<div className="bg-red-500 relative">
-
+			
+			{/* checking the operation of the pop-up */}
+			{/* <Popup /> */}
+			
 			{/* <div>
 				<button onClick={() => getData({ ignoreCache: true })}>
 					Reload data
