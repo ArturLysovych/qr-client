@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react"
 import FingerprintJS from "@fingerprintjs/fingerprintjs"
-import Cookies from 'js-cookie';
 
 import { useMyContext } from "../providers/ContextProvider"
 import { getUser } from "../utils"
 import { IScanHistory, IUser } from "../interfaces"
 
 const HistoryTable = () => {
+
 	const [data, setData] = useState<IScanHistory[]>([])
 
 	const { id, setId, message } = useMyContext();
@@ -16,12 +16,7 @@ const HistoryTable = () => {
 			FingerprintJS.load()
 				.then(fp => fp.get())
 				.then(result => {
-					const existingCookie = Cookies.get('qr_unique_user_id');
-					if (!existingCookie) {
-						setId(result.visitorId);
-					} else {
-						setId(existingCookie);
-					}
+					setId(result.visitorId);
 				})
 		}
 	}, [id])
@@ -39,7 +34,7 @@ const HistoryTable = () => {
 				<table className="w-full">
 					<tbody className="flex flex-col gap-2">
 						{data.map((item, index) => (
-							<tr key={item._id} className={`w-full bg-red-400 flex justify-between text-[8px] sm:text-[10px] md:text-lg lg:text-2xl py-3 px-4 rounded-xl`}>
+							<tr key={item._id} className="w-full bg-red-200 flex justify-between text-[8px] sm:text-[10px] md:text-lg lg:text-2xl py-3 px-4 rounded-xl">
 								<td>{index + 1}</td>
 								<td>total scans: {item.totalScans}</td>
 								<td>date: {item.date.slice(0, 10).split("-").reverse().join("/")}</td>

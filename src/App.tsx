@@ -14,16 +14,12 @@ function App() {
 		<Router>
 			<Routes>
 				<Route path="/" element={<QrPage />} />
-				<Route path="/user/:id" element={<RedirectPage />} />
+				<Route path="/redirect" element={<RedirectPage />} />
 				<Route path="/users" element={<UsersPage />} />
 				<Route path="/shop" element={<ShopPage />} />
 				<Route path="/statistic/:id" element={<StatisticPage />} />
 				<Route path="/login" element={<LoginPage />} />
-				<Route path="/admin/*" element={<AdminPage />}>
-					<Route path="requests" element={<></>} />
-					<Route path="history" element={<></>} />
-					{/* <Route path="*" element={<Navigate to="/admin/requests" replace />} /> */}
-				</Route>
+				<Route path="/admin/*" element={<AdminPage />} />
 				<Route path="*" element={<Navigate to="/" />} />
 			</Routes>
 		</Router>
